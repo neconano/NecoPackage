@@ -1,5 +1,6 @@
 {
     "name": "neconano/neco-package",
+    "type": "library",
     "authors": [
         {
             "name": "Your Name",
@@ -9,7 +10,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "neco\\": "neconano/neco-package/Phing/"
+            "neco\\": "neco-package/Phing/"
         }
     }
 }

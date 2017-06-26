@@ -9,7 +9,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "neco\\package\\": "Phing/"
+            "neco\\": "neconano/neco-package/Phing/"
         }
     }
 }

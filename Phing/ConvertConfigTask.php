@@ -9,34 +9,41 @@ use YamlFileParser;
 class ConvertConfigTask extends Task
 {
     private $configFile = '';
-
     private $destFile = '';
 
-    private function transPath($file)
-    {
+    private function transPath($file){
+        $dir = explode('\\vendor',__DIR__);
+        $dir = explode('\\',$dir[1]);
+        for($i=0; $i < count($dir); $i++ ) $str .= '../'; 
         if (strpos($file, '/') !== 0) {
-            $file = realpath(__DIR__ . '/../../') . '/' . $file;
+            $file = realpath(__DIR__ . '/'. $str) . '/' . $file;
         }
         return $file;
     }
 
-    public function setDestFile($file)
-    {
+    public function setDestFile($file){
         $this->destFile = $this->transPath($file);
     }
 
-    public function setConfigFile($file)
-    {
+    public function setConfigFile($file){
         $this->configFile = $this->transPath($file);
     }
 
-    private function ensureFolderExist($file)
-    {
+    private function ensureFolderExist($file){
         $folder = dirname($file);
-
         if (!is_dir($folder)) {
             mkdir($folder, 0755, true);
         }
+    }
+
+    private function parseConfigItem($key, $value, &$configs, $originConfig){
+        $keys = explode('.', $key);
+        while ($k = array_shift($keys)) {
+            $configs = &$configs[$k];
+            if(is_array($originConfig))
+                $re_config = $originConfig[$k];
+        }
+        $configs = isset($re_config) ? $re_config : $value;
     }
 
     public function main()
@@ -50,6 +57,7 @@ class ConvertConfigTask extends Task
         $properties = $this->project->getProperties();
         $parser = new YamlFileParser();
         $configs = $parser->parseFile($phingFile);
+
         $out = [];
         foreach ($configs as $key => &$value) {
             if (isset($properties[$key])) {
@@ -58,7 +66,6 @@ class ConvertConfigTask extends Task
             }
         }
 
-        $out['global']['APP_DEBUG'] = !!$out['global']['APP_DEBUG'];
         $this->ensureFolderExist($this->destFile);
         file_put_contents(
             $this->destFile,
@@ -66,13 +73,5 @@ class ConvertConfigTask extends Task
         );
     }
 
-    private function parseConfigItem($key, $value, &$configs, $originConfig)
-    {
-        $keys = explode('.', $key);
-        while ($k = array_shift($keys)) {
-            $configs = &$configs[$k];
-            $originConfig = $originConfig[$k];
-        }
-        $configs = is_array($originConfig) ? $originConfig : $value;
-    }
+
 }

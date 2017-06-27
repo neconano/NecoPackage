@@ -10,7 +10,8 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "neco\\Phing\\": "Phing/"
+            "neco\\Phing\\": "Phing/",
+            "neco\\Tools\\": "Tools/"
         }
     }
 }

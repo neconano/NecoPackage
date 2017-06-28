@@ -15,7 +15,8 @@
     "autoload": {
         "psr-4": {
             "neco\\Phing\\": "Phing/",
-            "neco\\Tools\\": "Tools/"
+            "neco\\Tools\\": "Tools/",
+            "neco\\String\\": "String/"
         }
     }
 }

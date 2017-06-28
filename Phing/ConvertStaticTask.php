@@ -111,15 +111,11 @@ class ConvertStaticTask extends Task
         foreach ($this->map as $key => &$value) {
             $value = $value['newFile'];
         }
-        file_put_contents(
-            $this->project->getBasedir() . '/config/' . $this->mapName,
-            '<?php return ' . var_export($this->map, true) . ';'
-        );
 
-        // file_put_contents(
-        //     $this->targetDir . '/' . $this->mapNameJs,
-        //     json_encode($this->map)
-        // );
+        file_put_contents(
+            $this->targetDir . '/' . $this->mapNameJs,
+            json_encode($this->map)
+        );
 
     }
 

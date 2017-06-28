@@ -69,7 +69,7 @@ class ConvertConfigTask extends Task
         $this->ensureFolderExist($this->destFile);
         file_put_contents(
             $this->destFile,
-            sprintf('<?php return %s;', var_export($out, true))
+            sprintf('<?php\nreturn %s;', var_export($out, true))
         );
     }
 

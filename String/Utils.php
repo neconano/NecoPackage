@@ -1,13 +1,11 @@
 <?php
 namespace neco\String;
 
-use neco\Tools\ConfigBag;
 use neco\String\Secret;
 
 class Utils
 {
     private static $encrypt = null;
-
     private static $schema = null;
 
     /**
@@ -158,6 +156,7 @@ class Utils
         return self::$schema;
     }
 
+    // 协议转换
     public static function convetHttp2Https($url, $force = false)
     {
         $schema = self::getRequestSchema();
@@ -167,54 +166,4 @@ class Utils
         return strpos($url, 'http://') === 0 ? str_replace('http://', 'https://', $url) : $url;
     }
 
-    /**
-     * 静态资源地址 url 根据http https 自动转换
-     *
-     * @author Cong Peijun <congpeijun@tuozhongedu.com>
-     * @return string
-     */
-    public static function getStaticUrl($force = false)
-    {
-        return self::convetHttp2Https(ConfigBag::getConfigByKey('url.STATIC_URL'), $force);
-    }
-
-    /**
-     * 网站默认根站点地址
-     *
-     * @author Cong Peijun <congpeijun@tuozhongedu.com>
-     * @return string
-     */
-    public static function getBaseUrl()
-    {
-        return self::convetHttp2Https(ConfigBag::getConfigByKey('url.BASE_URL'));
-    }
-
-    /**
-     * img_home 对应的url
-     *
-     * @author Cong Peijun <congpeijun@tuozhongedu.com>
-     * @return string
-     */
-    public static function getImgHomeUrl()
-    {
-        return self::convetHttp2Https(ConfigBag::getConfigByKey('url.IMG_DOMAIN'));
-    }
-
-    public static function getManagerUrl()
-    {
-        return self::convetHttp2Https(ConfigBag::getConfigByKey('url.MNG_DOMAIN'));
-    }
-
-    public static function getApiUrl()
-    {
-        return self::convetHttp2Https(ConfigBag::getConfigByKey());
-    }
-    public static function loadCss($css)
-    {
-
-    }
-    public static function loadJs($css)
-    {
-
-    }
 }

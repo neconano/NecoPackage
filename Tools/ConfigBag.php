@@ -1,5 +1,5 @@
 <?php
-
+// 将配置文件载入读取
 namespace neco\Tools;
 
 class ConfigBag

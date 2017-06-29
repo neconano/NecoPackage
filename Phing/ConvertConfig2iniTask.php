@@ -56,11 +56,11 @@ class ConvertConfig2iniTask extends Task
                 //add section information to the output
                 $out .= '[' . join('.', $sec) . ']' . PHP_EOL;
                 //recursively traverse deeper
-                $out .= arr2ini($v, $sec);
+                $out .= $this->arr2ini($v, $sec);
             }
             else{
                 //plain key->value case
-                $out .= "$k=$v" . PHP_EOL;
+                $out .= "$k = $v" . PHP_EOL;
             }
         }
         return $out;

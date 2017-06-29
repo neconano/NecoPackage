@@ -14,13 +14,21 @@ class CDNMapper
     private $hashStatic = false;
     // private static $gloabJsLoaded = false;
 
-    public function __construct(){
-        $this->_init_static_map();
+    // 转成实际地址
+    private function transPath($file){
+        $dir = explode('\\vendor',__DIR__);
+        $dir = explode('\\',$dir[1]);
+        for($i=0; $i < count($dir); $i++ ) $str .= '../'; 
+        if (strpos($file, '/') !== 0) {
+            $file = realpath(__DIR__ . '/'. $str) . '/' . $file;
+        }
+        return $file;
     }
 
     // 初始化压缩解析
-    public function _init_static_map($mapperFile = ''){
-        $mapperFile = $mapperFile ? $mapperFile : ConfigBag::getConfigByKey('global.CDN_DIR') . 'static_map.php';
+    private function _init_static_map($mapperFile = ''){
+        $mapperFile = $mapperFile ? $mapperFile : ConfigBag::getConfigByKey('global.CDN_DIR') . '/static_map.php';
+        $mapperFile = self::transPath($mapperFile);
         if (!file_exists($mapperFile)) 
             return false;    
         $this->staticMpper = require $mapperFile;
@@ -28,6 +36,9 @@ class CDNMapper
         $this->isSsl = $this->schema === 'https';
         $this->cdn_domain = ConfigBag::getConfigByKey('url.CDN_DOMAIN');
         $this->hashStatic = ConfigBag::getConfigByKey('feature.hash_assets') === true;
+        if (!$this->hashStatic) 
+            return false;   
+        return true;     
     }
 
     /**
@@ -35,19 +46,19 @@ class CDNMapper
      * @param string &$contents [description]
      */
     public function renderOutput(&$contents){
-        $this->hashStatic && $this
-            ->renderCss($contents)
-            ->renderImg($contents)
-            ->renderScript($contents)
-            ->renderLink($contents)
-            ->purifyHtml($contents)
-        ;
+        if(!self::_init_static_map())
+            return false;    
+        self::renderCss($contents);
+        self::renderImg($contents);
+        self::renderScript($contents);
+        self::renderLink($contents);
+        // self::purifyHtml($contents);
         // $this->loadGloabJs($contents);
     }
 
     // 地址替换
     private function replaceCallBack($matches){
-        return str_replace($matches[1], '"' . $this->getCDNUrl(trim($matches[1], '"')) . '"', $matches[0]);
+        return str_replace($matches[1], '"' . self::getCDNUrl(trim($matches[1], '"')) . '"', $matches[0]);
     }
 
     /**
@@ -65,7 +76,7 @@ class CDNMapper
         // if ( strpos($this->cdn_domain, $srcInfo['host']) !== false && strpos($src, 'https') !== 0) {
         //     return StringUtils::convetHttp2Https($src);
         // }
-        
+
         if (isset($srcInfo['host']) &&
             strpos($this->cdn_domain, $srcInfo['host']) !== false &&
             isset($this->staticMpper[$file]) ) {
@@ -78,8 +89,11 @@ class CDNMapper
     {
         $contents = preg_replace_callback(
             '@<link.+?href=(".+?").*?>@',
-            [$this, 'replaceCallBack'],
+            function ($matches) {
+                return self::replaceCallBack($matches);
+            },
             $contents);
+
         return $this;
     }
 
@@ -87,12 +101,16 @@ class CDNMapper
     {
         $contents = preg_replace_callback(
             '@<img.+?src=(".*?").*?>@',
-            [$this, 'replaceCallBack'],
+            function ($matches) {
+                return self::replaceCallBack($matches);
+            },
             $contents);
 
         $contents = preg_replace_callback(
             '@<img.+?data\-original=(".*?").*?>@',
-            [$this, 'replaceCallBack'],
+            function ($matches) {
+                return self::replaceCallBack($matches);
+            },
             $contents);
         return $this;
     }
@@ -101,17 +119,10 @@ class CDNMapper
     {
         $contents = preg_replace_callback(
             '@<script.+?src=(".+?").*?>@',
-            [$this, 'replaceCallBack'],
+            function ($matches) {
+                return self::replaceCallBack($matches);
+            },
             $contents);
-        return $this;
-    }
-
-    public function purifyHtml(&$contents)
-    {
-        if (ConfigBag::getConfigByKey('feature.minify_html')) {
-            $HTMLMinify = new HTMLMinify($contents, ['optimizationLevel' => HTMLMinify::OPTIMIZATION_ADVANCED]);
-            $contents = $HTMLMinify->process();
-        }
         return $this;
     }
 
@@ -144,6 +155,14 @@ class CDNMapper
         return $this;
     }
 
+    // public function purifyHtml(&$contents)
+    // {
+    //     if (ConfigBag::getConfigByKey('feature.minify_html')) {
+    //         $HTMLMinify = new HTMLMinify($contents, ['optimizationLevel' => HTMLMinify::OPTIMIZATION_ADVANCED]);
+    //         $contents = $HTMLMinify->process();
+    //     }
+    //     return $this;
+    // }
 
     // 增加全局js
     // private function loadGloabJs(&$contents)

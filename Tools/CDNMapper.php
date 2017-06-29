@@ -14,8 +14,13 @@ class CDNMapper
     private $hashStatic = false;
     // private static $gloabJsLoaded = false;
 
+    public function __construct(){
+        $this->_init_static_map();
+    }
+
     // 初始化压缩解析
-    public function _init_static_map($mapperFile){
+    public function _init_static_map($mapperFile = ''){
+        $mapperFile = $mapperFile ? $mapperFile : ConfigBag::getConfigByKey('global.CDN_DIR') . 'static_map.php';
         if (!file_exists($mapperFile)) 
             return false;    
         $this->staticMpper = require $mapperFile;

@@ -60,7 +60,10 @@ class ConvertConfig2iniTask extends Task
             }
             else{
                 //plain key->value case
-                $out .= "$k = $v" . PHP_EOL;
+                if(is_string($v))
+                    $out .= "$k = '$v'" . PHP_EOL;
+                else
+                    $out .= "$k = $v" . PHP_EOL;
             }
         }
         return $out;

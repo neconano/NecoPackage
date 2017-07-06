@@ -12,14 +12,7 @@ class ConvertConfigTask extends Task
     private $destFile = '';
 
     private function transPath($file){
-        var_dump(__DIR__);
-        $dir = explode('\\vendor',__DIR__);
-        var_dump($dir);
-        $dir = explode('\\',$dir[1]);
-        for($i=0; $i < count($dir); $i++ ) $str .= '../'; 
-        if (strpos($file, '/') !== 0) {
-            $file = realpath(__DIR__ . '/'. $str) . '/' . $file;
-        }
+        $file = realpath(__DIR__ . '/../../../') . $file;
         return $file;
     }
 

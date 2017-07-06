@@ -11,13 +11,18 @@ class ConvertConfig2iniTask extends Task
     private $configFile = '';
     private $destFile = '';
 
+    // private function transPath($file){
+    //     $dir = explode('\\vendor',__DIR__);
+    //     $dir = explode('\\',$dir[1]);
+    //     for($i=0; $i < count($dir); $i++ ) $str .= '../'; 
+    //     if (strpos($file, '/') !== 0) {
+    //         $file = realpath(__DIR__ . '/'. $str) . '/' . $file;
+    //     }
+    //     return $file;
+    // }
+
     private function transPath($file){
-        $dir = explode('\\vendor',__DIR__);
-        $dir = explode('\\',$dir[1]);
-        for($i=0; $i < count($dir); $i++ ) $str .= '../'; 
-        if (strpos($file, '/') !== 0) {
-            $file = realpath(__DIR__ . '/'. $str) . '/' . $file;
-        }
+        $file = realpath(__DIR__ . '/../../../') . $file;
         return $file;
     }
 

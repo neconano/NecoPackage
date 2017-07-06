@@ -23,7 +23,7 @@ class ConvertConfig2iniTask extends Task
 
     private function transPath($file){
         if (strpos($file, '/') !== 0) {
-            $file = realpath(__DIR__ . '/../../../') . '/' . $file;
+            $file = realpath(__DIR__ . '/../../../../') . '/' . $file;
         }
         return $file;
     }

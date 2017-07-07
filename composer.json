@@ -8,9 +8,9 @@
         }
     ],
     "require": {
-        "phing/phing": "^3.0@dev",
-        "websharks/css-minifier": "dev-master",
-        "symfony/console": "3.4.x-dev"
+        "phing/phing": "^2.16.0",
+        "websharks/css-minifier": "150820",
+        "symfony/console": "~v3.3.4",
     },
     "autoload": {
         "psr-4": {

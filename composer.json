@@ -16,7 +16,8 @@
         "psr-4": {
             "neco\\Phing\\": "Phing/",
             "neco\\Tools\\": "Tools/",
-            "neco\\String\\": "String/"
+            "neco\\String\\": "String/",
+            "neco\\NFUtil\\": "NFUtil/"
         }
     }
 }

@@ -1,0 +1,15 @@
+<extend name="$_admin_public_layout"/>
+
+<block name="style">
+    <include file="$_stylebuilder_layout" />
+</block>
+
+<block name="main">
+    <div class="panel-body">
+        <include file="$_listbuilder_layout" builderpath="$_builder_layout" />
+    </div>
+</block>
+
+<block name="script">
+    <include file="$_scriptbuilder_layout" />
+</block>

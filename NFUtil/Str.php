@@ -402,7 +402,7 @@ class Str
                     if (strpos($func_name, '->')) {
                         $func_arr   = explode('->', $func_name);
                         $model_name = trim($func_arr[0], "D('\")");
-                        $call_arr[] = D($model_name);
+                        $call_arr[] = D2($model_name);
                         $call_arr[] = $func_arr[1];
                         return call_user_func($call_arr, $func_param);
                     } else {

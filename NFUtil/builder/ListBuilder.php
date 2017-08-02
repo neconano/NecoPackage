@@ -38,6 +38,9 @@ class ListBuilder extends Controller
     protected function _initialize()
     {
         $this->_template = BUILDER_DIR . 'layout/' . strtolower(MODULE_MARK) . '/list.html';
+        // builder默认操作表模型名
+        $this->_db_model = request()->module() .'_'. request()->controller();
+        $this->_db_model = strtolower($this->_db_model);
     }
 
     /**
@@ -91,7 +94,7 @@ class ListBuilder extends Controller
                 $my_attribute['title']       = '<i class="fa fa-check"></i> 启用';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class']       = 'btn btn-success-outline btn-pill ajax-post confirm';
-                $my_attribute['model']       = $attribute['model'] ?: request()->controller(); // 要操作的数据模型
+                $my_attribute['model']       = $attribute['model'] ?: $this->_db_model; // 要操作的数据模型
                 $my_attribute['href']        = U(
                     request()->module() . '/' . request()->controller() . '/setStatus',
                     array(
@@ -113,7 +116,7 @@ class ListBuilder extends Controller
                 $my_attribute['title']       = '<i class="fa fa-ban"></i> 禁用';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class']       = 'btn btn-warning-outline btn-pill ajax-post confirm';
-                $my_attribute['model']       = $attribute['model'] ?: request()->controller();
+                $my_attribute['model']       = $attribute['model'] ?: $this->_db_model;
                 $my_attribute['href']        = U(
                     request()->module() . '/' . request()->controller() . '/setStatus',
                     array(
@@ -135,7 +138,7 @@ class ListBuilder extends Controller
                 $my_attribute['title']       = '<i class="fa fa-trash"></i> 回收';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class']       = 'btn btn-danger-outline btn-pill ajax-post confirm';
-                $my_attribute['model']       = $attribute['model'] ?: request()->controller();
+                $my_attribute['model']       = $attribute['model'] ?: $this->_db_model;
                 $my_attribute['href']        = U(
                     request()->module() . '/' . request()->controller() . '/setStatus',
                     array(
@@ -157,7 +160,7 @@ class ListBuilder extends Controller
                 $my_attribute['title']       = '<i class="fa fa-check"></i> 还原';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class']       = 'btn btn-success-outline btn-pill ajax-post confirm';
-                $my_attribute['model']       = $attribute['model'] ?: request()->controller();
+                $my_attribute['model']       = $attribute['model'] ?: $this->_db_model;
                 $my_attribute['href']        = U(
                     request()->module() . '/' . request()->controller() . '/setStatus',
                     array(
@@ -179,7 +182,7 @@ class ListBuilder extends Controller
                 $my_attribute['title']       = '<i class="fa fa-close"></i> 删除';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class']       = 'btn btn-danger-outline btn-pill ajax-post confirm';
-                $my_attribute['model']       = $attribute['model'] ?: request()->controller();
+                $my_attribute['model']       = $attribute['model'] ?: $this->_db_model;
                 $my_attribute['href']        = U(
                     request()->module() . '/' . request()->controller() . '/setStatus',
                     array(
@@ -354,7 +357,7 @@ class ListBuilder extends Controller
             case 'forbid': // 改变记录状态按钮，会更具数据当前的状态自动选择应该显示启用/禁用
                 //预定义按钮属
                 $my_attribute['type']             = 'forbid';
-                $my_attribute['model']            = $attribute['model'] ?: request()->controller();
+                $my_attribute['model']            = $attribute['model'] ?: $this->_db_model;
                 $my_attribute['forbid0']['name']  = 'resume';
                 $my_attribute['forbid0']['title'] = '启用';
                 $my_attribute['forbid0']['class'] = 'label label-success-outline label-pill ajax-get confirm';
@@ -398,7 +401,7 @@ class ListBuilder extends Controller
             case 'recycle':
                 //预定义按钮属
                 $my_attribute['type']              = 'recycle';
-                $my_attribute['model']             = $attribute['model'] ?: request()->controller();
+                $my_attribute['model']             = $attribute['model'] ?: $this->_db_model;
                 $my_attribute['recycle1']['name']  = 'recycle';
                 $my_attribute['recycle1']['title'] = '回收';
                 $my_attribute['recycle1']['class'] = 'label label-danger-outline label-pill ajax-get confirm';
@@ -444,7 +447,7 @@ class ListBuilder extends Controller
                 $my_attribute['name']  = 'restore';
                 $my_attribute['title'] = '还原';
                 $my_attribute['class'] = 'label label-success-outline label-pill ajax-get confirm';
-                $my_attribute['model'] = $attribute['model'] ?: request()->controller();
+                $my_attribute['model'] = $attribute['model'] ?: $this->_db_model;
                 $my_attribute['href']  = U(
                     request()->module() . '/' . request()->controller() . '/setStatus',
                     array(
@@ -465,7 +468,7 @@ class ListBuilder extends Controller
                 $my_attribute['name']  = 'delete';
                 $my_attribute['title'] = '删除';
                 $my_attribute['class'] = 'label label-danger-outline label-pill ajax-get confirm';
-                $my_attribute['model'] = $attribute['model'] ?: request()->controller();
+                $my_attribute['model'] = $attribute['model'] ?: $this->_db_model;
                 $my_attribute['href']  = U(
                     request()->module() . '/' . request()->controller() . '/setStatus',
                     array(

@@ -33,7 +33,7 @@
                         markdown          : editormd_[type]{$group_k|default=''}_markdown_{$[type]k}_content,
                         imageUpload       : true,
                         imageFormats      : ["jpg", "jpeg", "gif", "png", "bmp"],
-                        imageUploadURL    : '{:U(request()->module()."/Upload/upload", array("callback_type" => "editormd", "module_name" => request()->module()), true, true)}',
+                        imageUploadURL    : '{:U(request()->module() . "/" . request()->controller()."/upload", array("callback_type" => "editormd", "module_name" => request()->module()), true, true)}',
                         placeholder       : 'NecoFramework',
                         width             : '100%',
                         height            : 640,

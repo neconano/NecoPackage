@@ -22,8 +22,8 @@
                             pasteType : 2,
                             filterMode: <?php if(request()->module() === 'Admin') {echo 'false';} else {echo 'true';} ?>,
                             urlType : "absolute",
-                            fileManagerJson : '{:U(request()->module()."/Upload/fileManager", '', true, true)}',
-                            uploadJson : '{:U(request()->module()."/Upload/upload", array("callback_type" => "kindeditor", "module_name" => request()->module()), true, true)}',
+                            fileManagerJson : '{:U(request()->module() . "/" . request()->controller()."/fileManager", '', true, true)}',
+                            uploadJson : '{:U(request()->module() . "/" . request()->controller()."/upload", array("callback_type" => "kindeditor", "module_name" => request()->module()), true, true)}',
                             extraFileUploadParams: {
                                 session_id : '{:session_id()}'
                             },

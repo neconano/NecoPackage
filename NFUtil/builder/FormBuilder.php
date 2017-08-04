@@ -37,6 +37,8 @@ class FormBuilder extends Controller
     protected function _initialize()
     {
         $this->_template = APP_PATH . strtolower(request()->module()) . '/view/admin/builder/form.html';
+        if(!is_file($this->_template))
+        $this->_template = APP_PATH . 'admin/view/admin/builder/form.html';
     }
 
     /**

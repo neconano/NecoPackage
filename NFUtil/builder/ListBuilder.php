@@ -38,6 +38,8 @@ class ListBuilder extends Controller
     protected function _initialize()
     {
         $this->_template = APP_PATH . strtolower(request()->module()) . '/view/admin/builder/list.html';
+        if(!is_file($this->_template))
+        $this->_template = APP_PATH . 'admin/view/admin/builder/list.html';
         // builder默认操作表模型名
         $this->_db_model = request()->module() .'_'. request()->controller();
         $this->_db_model = strtolower($this->_db_model);

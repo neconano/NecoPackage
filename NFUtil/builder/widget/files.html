@@ -19,7 +19,7 @@
                             <foreach name="files" item="file">
                                 <li class="list-group-item file-item" data-id="{$file}">
                                     <i class="fa fa-file"></i>
-                                    <span><?php echo D2('Upload')->getUploadInfo($file, 'name'); ?></span>
+                                    <span><?php echo D2('AdminUpload')->getUploadInfo($file, 'name'); ?></span>
                                     <i class="fa fa-times-circle pull-right remove-file"></i>
                                 </li>
                             </foreach>

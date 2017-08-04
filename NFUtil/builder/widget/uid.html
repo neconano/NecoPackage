@@ -5,7 +5,7 @@
             <?php
                 if ($[type]form['value']) {
                     $map['id'] = array('in', $[type]form['value']);
-                    $uids = D2('User')->where($map)->select();
+                    $uids = D2('AdminUser')->where($map)->select();
                 }
                 if ($uids) {
                     $uids = json_encode($uids);

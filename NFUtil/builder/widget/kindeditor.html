@@ -20,10 +20,10 @@
                             height : '500px',
                             resizeType: 1,
                             pasteType : 2,
-                            filterMode: <?php if(MODULE_MARK === 'Admin') {echo 'false';} else {echo 'true';} ?>,
+                            filterMode: <?php if(request()->module() === 'Admin') {echo 'false';} else {echo 'true';} ?>,
                             urlType : "absolute",
-                            fileManagerJson : '{:U(MODULE_MARK."/Upload/fileManager", '', true, true)}',
-                            uploadJson : '{:U(MODULE_MARK."/Upload/upload", array("callback_type" => "kindeditor", "module_name" => request()->module()), true, true)}',
+                            fileManagerJson : '{:U(request()->module()."/Upload/fileManager", '', true, true)}',
+                            uploadJson : '{:U(request()->module()."/Upload/upload", array("callback_type" => "kindeditor", "module_name" => request()->module()), true, true)}',
                             extraFileUploadParams: {
                                 session_id : '{:session_id()}'
                             },

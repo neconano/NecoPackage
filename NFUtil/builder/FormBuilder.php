@@ -36,7 +36,7 @@ class FormBuilder extends Controller
      */
     protected function _initialize()
     {
-        $this->_template = BUILDER_DIR . 'layout/' . strtolower(MODULE_MARK) . '/form.html';
+        $this->_template = BUILDER_DIR . 'layout/' . strtolower(request()->module()) . '/form.html';
     }
 
     /**

@@ -11,7 +11,7 @@
                                 <notempty name="[type]form.value">
                                     <li class="list-group-item file-item" data-id="{$[type]form.value|default=''}">
                                         <i class="fa fa-file"></i>
-                                        <span><?php echo D2('AdminUpload')->getUploadInfo($[type]form['value'], 'name'); ?></span>
+                                        <span><?php echo D('AdminUpload')->getUploadInfo($[type]form['value'], 'name'); ?></span>
                                         <i class="fa fa-times-circle remove-file"></i>
                                     </li>
                                 </notempty>

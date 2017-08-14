@@ -580,7 +580,7 @@ class ListBuilder extends Controller
      * 显示页面
      * 
      */
-    public function display($template = '', $vars = [], $replace = [], $config = [])
+    public function display($template = '', $config = [])
     {
         // 编译data_list中的值
         foreach ($this->_table_data_list as $key => &$data) {
@@ -757,7 +757,7 @@ class ListBuilder extends Controller
         //     parent::display();
         // } else {
         $this->assign('is_builder', 'list'); // Builder标记
-        parent::display($this->_template);
+        parent::display($this->_template, $config);
         //}
     }
 

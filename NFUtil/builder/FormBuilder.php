@@ -223,7 +223,7 @@ class FormBuilder extends Controller
      * 显示页面
      * 
      */
-    public function display($template = '', $vars = [], $replace = [], $config = [])
+    public function display($template = '', $config = [])
     {
         // 额外已经构造好的表单项目与单个组装的的表单项目进行合并
         if (count($this->_extra_items) > 0) {
@@ -279,7 +279,7 @@ class FormBuilder extends Controller
         //     parent::display();
         // } else {
         $this->assign('is_builder', 'form'); // Builder标记
-        parent::display($this->_template);
+        parent::display($this->_template, $config);
         //}
     }
 }

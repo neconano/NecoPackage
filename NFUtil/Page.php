@@ -50,8 +50,8 @@ class Page
         /* 基础设置 */
         $this->totalRows = $totalRows; //设置总记录数
         $this->listRows  = $listRows; //设置每页显示行数
-        $this->parameter = empty($parameter) ? $_GET : $parameter;
-        $this->nowPage   = empty($_GET[$this->p]) ? 1 : intval($_GET[$this->p]);
+        $this->parameter = empty($parameter) ? I('param.') : $parameter;
+        $this->nowPage   = empty(I($this->p)) ? 1 : intval(I($this->p));
         $this->nowPage   = $this->nowPage > 0 ? $this->nowPage : 1;
         $this->firstRow  = $this->listRows * ($this->nowPage - 1);
         if ($this->isWap()) {
@@ -79,7 +79,7 @@ class Page
      */
     private function url($page)
     {
-        return str_replace(urlencode('[PAGE]'), $page, $this->url);
+        return str_replace(strtolower(urlencode('[PAGE]')), $page, $this->url);
     }
 
     /**
@@ -94,7 +94,22 @@ class Page
 
         /* 生成URL */
         $this->parameter[$this->p] = '[PAGE]';
-        $this->url                 = url(Request::instance()->action(), $this->parameter);
+
+        // 处理在插件模式下
+        if(strpos($_SERVER['PHP_SELF'], 'addon/execute/_addons') !== false){
+            $this->parameter[$this->p] = urlencode('[PAGE]');
+            $this->url  = $_SERVER['PHP_SELF'];
+            foreach($this->parameter as $k => $v){
+                if($str)
+                $str .= '&'.$k.'='.$v;
+                else
+                $str = $k.'='.$v;
+            }
+            if($str)
+            $this->url .= '?'.$str; 
+        }else
+        $this->url  = url(Request::instance()->action(), $this->parameter);
+        
         /* 计算分页信息 */
         $this->totalPages = ceil($this->totalRows / $this->listRows); //总页数
         if (!empty($this->totalPages) && $this->nowPage > $this->totalPages) {

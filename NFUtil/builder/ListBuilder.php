@@ -608,6 +608,13 @@ class ListBuilder extends Controller
                         }
                     }
 
+                    // 自定义
+                    if(isset($right_button['type']) && $right_button['type'] === 'self'){
+                        if($right_button['callback']){
+                            $right_button = call_user_func ( $right_button['callback'] , $data, $right_button );
+                        }
+                    }
+                    
                     // 将约定的标记__data_id__替换成真实的数据ID
                     $right_button['href'] = preg_replace(
                         '/__data_id__/i',
@@ -628,6 +635,7 @@ class ListBuilder extends Controller
                         // 编译按钮属性
                         $right_button['attribute'] = $this->compileHtmlAttr($right_button);
                     }
+
                     $data['right_button'][$right_button['name']] = $right_button;
                 }
             }

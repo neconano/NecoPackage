@@ -19,7 +19,7 @@
             "neco\\Tools\\": "Tools/",
             "neco\\String\\": "String/",
             "neco\\NFUtil\\": "NFUtil/",
-            "neco\\Easywechat\\": "Easywechat/"
+            "neco\\Wechat\\": "Wechat/"
         }
     }
 }

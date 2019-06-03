@@ -10,14 +10,16 @@
     "require": {
         "phing/phing": "^2.16.0",
         "websharks/css-minifier": "150820",
-        "symfony/console": "~v3.3.4"
+        "symfony/console": "~v3.3.4",
+        "overtrue/wechat": "~3.0"
     },
     "autoload": {
         "psr-4": {
             "neco\\Phing\\": "Phing/",
             "neco\\Tools\\": "Tools/",
             "neco\\String\\": "String/",
-            "neco\\NFUtil\\": "NFUtil/"
+            "neco\\NFUtil\\": "NFUtil/",
+            "neco\\Easywechat\\": "Easywechat/"
         }
     }
 }

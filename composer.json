@@ -18,8 +18,7 @@
             "neco\\Phing\\": "Phing/",
             "neco\\Tools\\": "Tools/",
             "neco\\String\\": "String/",
-            "neco\\NFUtil\\": "NFUtil/",
-            "neco\\Wechat\\": "Wechat/"
+            "neco\\NFUtil\\": "NFUtil/"
         }
     }
 }

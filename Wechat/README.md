@@ -1,5 +1,6 @@
 基于 overtrue/wechat
 
+```
 return [
     /**
      * Debug 模式，bool 值：true/false
@@ -63,21 +64,25 @@ return [
 
 
 // 授权
-if(Cookie::get('openid')){
-    $this->openid = Cookie::get('openid');
-}else{
-    $call_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-    Cookie::set('call_url',$call_url);
-    if(I('code')){
-        $token = Wechat::oauth()->getAccessToken(I('code'));
-        Cookie::set('openid',$token->openid,600);
+public function init(){
+    // 回调阶段立即返回
+    $callback = Config::get('oauth.callback');
+    if( false !== strpos($_SERVER['REQUEST_URI'],$callback)){
+        return;
+    }
+    if(Cookie::get('openid')){
+        $this->openid = Cookie::get('openid');
     }else{
-        $response = Wechat::oauth()->redirect()->send();
+        $call_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        Cookie::set('call_url',$call_url);
+        $response = Easywechat::oauth()->redirect()->send();
         return $response;
     }
+    return $this->openid;
 }
 
-// 回调
+
+// 授权回调
 function oauth_callback(){
     // Log::write('测试日志信息，这是警告级别，并且实时写入','notice');
     $openid = Wechat::oauth()->user()->getId();
@@ -86,8 +91,7 @@ function oauth_callback(){
     header('location:'. Cookie::get('call_url')?:'/');
 }
 
-
-
+```
 
 
 

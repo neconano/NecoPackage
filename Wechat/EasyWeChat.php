@@ -25,6 +25,7 @@ use think\Config;
  * @method static \EasyWeChat\Stats\Stats                     stats
  * @method static \EasyWeChat\Payment\Merchant                merchant
  * @method static \EasyWeChat\Payment\Payment                 payment
+ * @method static \EasyWeChat\Payment\Order                   order
  * @method static \EasyWeChat\Payment\LuckyMoney\LuckyMoney   lucky_money
  * @method static \EasyWeChat\Payment\MerchantPay\MerchantPay merchant_pay
  * @method static \EasyWeChat\Reply\Reply                     reply
